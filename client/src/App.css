@@ -1,0 +1,116 @@
+:root {
+  --background-color: rgb(182, 182, 182);
+  background: var(--background-color);
+}
+
+.App {
+  background-image: url('https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2048x1152/36cda554ce92ac622e545d5c69cab997/photo-1550251066-53a6df66b86e.jpg');
+  height: 100vh;
+}
+
+.title-bar {
+  background: rgba(0, 0, 0, 0.32);
+  color: #172b4d;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 6px 0;
+  color: rgb(204, 204, 204);
+}
+
+.board {
+  display: flex;
+}
+
+.board-list {
+  margin: 30px 2px 0 8px;
+  background: #ebecf0;
+  width: 272px;
+  padding: 10px;
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.list-header {
+  padding: 0px 5px 10px;
+  min-height: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.list-card {
+  cursor: pointer;
+  margin-bottom: 8px;
+  background: #ffffff;
+}
+
+.list-card:hover {
+  background: #f3f3f3;
+}
+
+.list-add-card {
+  padding: 4px;
+  color: rgb(126, 126, 126);
+  border-radius: 3px;
+}
+
+.list-add-card:hover {
+  background: #c7c7c7;
+  cursor: pointer;
+}
+
+.list-text-item {
+  box-shadow: 0 1px rgba(9, 30, 66, 0.25);
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.list-add-card-input {
+  resize: none;
+  height: 57px;
+  width: 100%;
+  border: none;
+  margin-bottom: 4px;
+}
+
+.submit-btn {
+  background: #5aac44;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  margin-right: 4px;
+  padding: 5px 8px 5px 8px;
+}
+
+.submit-btn:hover {
+  background: #6ecf53;
+}
+
+.close-btn {
+  background: #cacaca;
+  border-radius: 3px;
+  border: none;
+  padding: 5px 8px 5px 8px;
+}
+
+.close-btn:hover {
+  background: #b6b6b6;
+}
+
+.add-list {
+  margin: 30px 0 0 8px;
+  color: #172b4d;
+  background-color: rgba(0, 0, 0, 0.08);
+  width: 272px;
+  padding: 10px;
+  border-radius: 3px;
+  height: 60px;
+  display: flex;
+  overflow: visible;
+  font-size: 14px;
+  cursor: pointer;
+}
+.add-list:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
