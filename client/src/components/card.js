@@ -7,7 +7,7 @@ export default class TodoCard extends Component {
       <Draggable draggableId={this.props.task.id} index={this.props.index}>
         {(provided) => (
           <div
-            {...provided.droppableProps}
+            {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             className='list-card list-text-item'

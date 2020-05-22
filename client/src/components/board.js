@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import List from './list';
-import { lists, temp_data } from './list_data';
+import { lists } from './list_data';
 import { v4 as uuidv4 } from 'uuid';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 export default class Board extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ export default class Board extends Component {
       showAddList: false,
       addListText: '',
       listData: lists,
-      cardData: temp_data,
     };
     this.addNewList = this.addNewList.bind(this);
     this.addNewTask = this.addNewTask.bind(this);
@@ -19,19 +18,83 @@ export default class Board extends Component {
     this.hideNewListInput = this.hideNewListInput.bind(this);
     this.showNewListInput = this.showNewListInput.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.handleDragEnd = this.handleDragEnd.bind(this);
   }
 
-  handleDragEnd(result) {}
+  handleDragEnd(result) {
+    const { destination, source, draggableId, type } = result;
+    console.log(type);
 
-  addNewTask(task, list) {
-    const cards = [...this.state.cardData];
-    cards.push({
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.draggableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+    if (type === 'column') {
+      const newLists = [...this.state.listData];
+      const spliceItem = this.state.listData[source.index];
+
+      newLists.splice(source.index, 1);
+      newLists.splice(destination.index, 0, spliceItem);
+      this.setState({
+        listData: newLists,
+      });
+      return;
+    }
+
+    const sourceListIndex = this.state.listData.findIndex(
+      (item) => item.id === source.droppableId
+    );
+    const sourceList = this.state.listData[sourceListIndex];
+    const newSourceList = [...sourceList.tasks];
+    const sourceItem = newSourceList[source.index];
+    const newLists = [...this.state.listData];
+
+    newSourceList.splice(source.index, 1);
+
+    if (source.droppableId === destination.droppableId) {
+      newSourceList.splice(destination.index, 0, sourceItem);
+
+      newLists[sourceListIndex].tasks = newSourceList;
+
+      this.setState({
+        listData: newLists,
+      });
+    } else {
+      // Create copy of destination list with inserted item
+      const destListIndex = this.state.listData.findIndex(
+        (item) => item.id === destination.droppableId
+      );
+      const destList = this.state.listData[destListIndex];
+      const newDestList = [...destList.tasks];
+      newDestList.splice(destination.index, 0, sourceItem);
+
+      // Set new state
+      newLists[sourceListIndex].tasks = newSourceList;
+      newLists[destListIndex].tasks = newDestList;
+
+      this.setState({
+        listData: newLists,
+      });
+    }
+  }
+
+  addNewTask(taskName, listId) {
+    const listIndex = this.state.listData.findIndex(
+      (element) => element.id === listId
+    );
+    const newLists = [...this.state.listData];
+    newLists[listIndex].tasks.push({
       id: uuidv4(),
-      title: task,
-      list: list,
+      title: taskName,
     });
+
     this.setState({
-      cardData: cards,
+      listData: newLists,
     });
   }
 
@@ -41,6 +104,7 @@ export default class Board extends Component {
       lists.push({
         id: uuidv4(),
         name: this.state.addListText,
+        tasks: [],
       });
       this.setState({
         listData: lists,
@@ -63,13 +127,15 @@ export default class Board extends Component {
   }
 
   render() {
-    const taskLists = this.state.listData.map((item) => (
+    const taskLists = this.state.listData.map((item, index) => (
       <div key={item.id}>
         <List
           key={item.id}
+          id={item.id}
           title={item.name}
           newTask={this.addNewTask}
-          cards={this.state.cardData}
+          cards={item.tasks}
+          index={index}
         />
       </div>
     ));
@@ -77,7 +143,23 @@ export default class Board extends Component {
     return (
       <DragDropContext onDragEnd={this.handleDragEnd}>
         <div className='board'>
-          {taskLists}
+          <Droppable
+            droppableId='all-columns'
+            direction='horizontal'
+            type='column'
+          >
+            {(provided) => (
+              <div
+                className='board'
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {taskLists}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+
           <div className='add-list'>
             {!this.state.showAddList && (
               <div className='add-list-text' onClick={this.showNewListInput}>
@@ -85,15 +167,11 @@ export default class Board extends Component {
               </div>
             )}
             {this.state.showAddList && (
-              <div
-                className='list-add-card-form'
-                id={this.props.title}
-                onClick={this.onClick}
-              >
+              <div className='list-add-card-form' onClick={this.onClick}>
                 <textarea
                   className='list-add-card-input list-text-item'
                   placeholder='Enter a title for this card...'
-                  value={this.state.addCardText}
+                  value={this.state.addListText}
                   onChange={this.onChange}
                 ></textarea>
                 <button className='submit-btn' onClick={this.addNewList}>

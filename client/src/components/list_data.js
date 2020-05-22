@@ -8,8 +8,36 @@ export const temp_data = [
 ];
 
 export const lists = [
-  { id: uuidv4(), name: 'List 3' },
-  { id: uuidv4(), name: 'List 1' },
-  { id: uuidv4(), name: 'List 2' },
-  { id: uuidv4(), name: 'List 4' },
+  {
+    id: uuidv4(),
+    name: 'List 3',
+    tasks: [
+      { id: uuidv4(), text: 'Do this thing', title: 'Task 1' },
+      { id: uuidv4(), text: 'Do that thing', title: 'Task 3' },
+    ],
+  },
+  {
+    id: uuidv4(),
+    name: 'List 1',
+    tasks: [
+      { id: uuidv4(), text: 'Do this thing', title: 'ASDF 1' },
+      { id: uuidv4(), text: 'Do that thing', title: 'ASDE 3' },
+    ],
+  },
+  {
+    id: uuidv4(),
+    name: 'List 2',
+    tasks: [
+      { id: uuidv4(), text: 'Do this thing', title: 'QWQQ 1' },
+      { id: uuidv4(), text: 'Do that thing', title: 'QEWW 3' },
+    ],
+  },
+  {
+    id: uuidv4(),
+    name: 'List 4',
+    tasks: [
+      { id: uuidv4(), text: 'Do this thing', title: 'POKEMON 1' },
+      { id: uuidv4(), text: 'Do that thing', title: 'TaPOKEMONsk 3' },
+    ],
+  },
 ];
