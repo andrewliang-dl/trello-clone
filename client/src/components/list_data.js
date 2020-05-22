@@ -20,24 +20,24 @@ export const lists = [
     id: uuidv4(),
     name: 'List 1',
     tasks: [
-      { id: uuidv4(), text: 'Do this thing', title: 'ASDF 1' },
-      { id: uuidv4(), text: 'Do that thing', title: 'ASDE 3' },
+      { id: uuidv4(), text: 'Do this thing', title: 'What a great app!' },
+      { id: uuidv4(), text: 'Do that thing', title: 'Create a trello app' },
     ],
   },
   {
     id: uuidv4(),
     name: 'List 2',
     tasks: [
-      { id: uuidv4(), text: 'Do this thing', title: 'QWQQ 1' },
-      { id: uuidv4(), text: 'Do that thing', title: 'QEWW 3' },
+      { id: uuidv4(), text: 'Do this thing', title: 'This is a good idea!' },
+      { id: uuidv4(), text: 'Do that thing', title: 'Do something important' },
     ],
   },
   {
     id: uuidv4(),
     name: 'List 4',
     tasks: [
-      { id: uuidv4(), text: 'Do this thing', title: 'POKEMON 1' },
-      { id: uuidv4(), text: 'Do that thing', title: 'TaPOKEMONsk 3' },
+      { id: uuidv4(), text: 'Do this thing', title: 'Do some task' },
+      { id: uuidv4(), text: 'Do that thing', title: 'Take the trash out' },
     ],
   },
 ];
